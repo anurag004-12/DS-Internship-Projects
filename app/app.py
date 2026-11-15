@@ -5,6 +5,17 @@ from dash import Dash, dcc, html, dash_table, Input, Output
 
 OUT = Path(__file__).resolve().parents[1] / "outputs"
 forecasts = pd.read_csv(OUT / "forecasts.csv", parse_dates=["date"])
+
+top_id = forecasts.groupby("id")["actual"].sum().idxmax()      # best-selling series
+
+store_fc = (forecasts.groupby(["store_id", "date"])[["actual", "forecast"]]
+            .sum().reset_index())                               # store totals (no interval)
+
+options = (
+    [{"label": f"Store total: {s}", "value": f"STORE|{s}"} for s in sorted(store_fc["store_id"].unique())]
+    + [{"label": i, "value": i} for i in sorted(forecasts["id"].unique())]
+)
+
 orders = pd.read_csv(OUT / "orders.csv")
 policies = pd.read_csv(OUT / "policies.csv")
 metrics = pd.read_csv(OUT / "metrics.csv")
@@ -44,9 +55,11 @@ app.layout = html.Div(style={"maxWidth": "1050px", "margin": "auto", "fontFamily
     ]),
 
     html.H4("Forecast with 90% prediction interval"),
-    dcc.Dropdown(options=sorted(forecasts["id"].unique()),
-                 value=forecasts["id"].iloc[0], id="series", clearable=False),
+    dcc.Dropdown(options=options, value=top_id, id="series", clearable=False),
     dcc.Graph(id="chart"),
+
+    html.P("Single-item daily sales are noisy: the forecast tracks the level and the band shows the 90% range. "
+       "Store totals are much smoother (about 9.5% error).", style={"color": "#555"}),
 
     html.H4("Model accuracy (WAPE and RMSE; lower is better)"),
     table(metrics.round(4)),
@@ -62,15 +75,21 @@ app.layout = html.Div(style={"maxWidth": "1050px", "margin": "auto", "fontFamily
 
 
 @app.callback(Output("chart", "figure"), Input("series", "value"))
-def update_chart(series_id):
-    d = forecasts[forecasts["id"] == series_id]
+def update_chart(choice):
     fig = go.Figure()
-    fig.add_scatter(x=d["date"], y=d["hi"], line=dict(width=0), showlegend=False, hoverinfo="skip")
-    fig.add_scatter(x=d["date"], y=d["lo"], fill="tonexty", line=dict(width=0),
-                    fillcolor="rgba(0,120,255,0.2)", name="90% interval")
+    if choice.startswith("STORE|"):
+        store = choice.split("|")[1]
+        d = store_fc[store_fc["store_id"] == store]
+        title = f"{store}: store total (sum of 50 items, no interval)"
+    else:
+        d = forecasts[forecasts["id"] == choice]
+        fig.add_scatter(x=d["date"], y=d["hi"], line=dict(width=0), showlegend=False, hoverinfo="skip")
+        fig.add_scatter(x=d["date"], y=d["lo"], fill="tonexty", line=dict(width=0),
+                        fillcolor="rgba(0,120,255,0.2)", name="90% interval")
+        title = choice
     fig.add_scatter(x=d["date"], y=d["forecast"], name="Forecast")
     fig.add_scatter(x=d["date"], y=d["actual"], name="Actual", mode="lines+markers")
-    fig.update_layout(title=series_id, xaxis_title="Date", yaxis_title="Units sold")
+    fig.update_layout(title=title, xaxis_title="Date", yaxis_title="Units sold")
     return fig
 
 
