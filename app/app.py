@@ -37,7 +37,7 @@ app.layout = html.Div(style={"maxWidth": "1050px", "margin": "auto", "fontFamily
     html.P("M5 Walmart, California FOODS_3, top 50 items. 28-day holdout forecast."),
 
     html.Div(style={"display": "flex", "gap": "12px", "marginBottom": "16px"}, children=[
-        card("Best item-level WAPE", f"{best['WAPE']:.3f} ({best['model']})"),
+        card("Production model WAPE", f"{best['WAPE']:.3f} ({best['model']})"),
         card("90% interval coverage", f"{extras['coverage_90']:.1%}"),
         card("Item-state gap before", f"{extras['gap_before']:.1f} units/day"),
         card("Item-state gap after", f"{extras['gap_after']:.2f} units/day"),
