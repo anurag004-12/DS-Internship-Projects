@@ -83,6 +83,10 @@ Accuracy barely changes, so the benefit is consistency.
 | Optimized, store capacity | 0.897 | 3,404 | 1,469 |
 | Optimized, no limit | 0.998 | 18,413 | 1,143 |
 
+![Dash app: forecast with 90% interval](docs/images/app_forecast.png)
+
+![CA_1 store forecast vs actual](docs/images/ca1_forecast.png)
+
 ## Assumptions (all inputs, change them in `src/optimize.py` and `src/config.py`)
 
 - Unit cost = 70% of price, so margin = 30%.
