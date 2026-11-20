@@ -1,8 +1,10 @@
-# Data Science Internship Projects
+# Data Science Internship: Final Submission
+
+This repository contains both allotted projects, one folder each. Start with the README inside the folder.
 
 | Project | Folder | Summary |
 |---|---|---|
-| DS-04: Experimentation and Causal Inference Platform | [DS-04/](DS-04/) | An internal tool that helps teams design A/B tests, analyze them correctly, and estimate cause and effect when an experiment isn't possible. It doesn't just compute a p-value: it checks whether the experiment can be trusted, and says so in plain English. |
-| DS-02: Nationwide Demand Forecasting and Inventory Optimization | [DS-02/](DS-02/) | 28-day demand forecasts with intervals, MinT reconciliation, OR-Tools ordering, Dash app |
+| DS-04 | [DS-04-Experimentation-Platform](DS-04-Experimentation-Platform) | Experimentation and causal inference platform: A/B test analysis with trust checks, safe early stopping, Bayesian analysis, causal methods, and a React app, with a real-data case study on Cookie Cats. |
+| DS-02 | [DS-02-Demand-Forecasting](DS-02-Demand-Forecasting) | Demand forecasting and inventory optimization on the M5 data: Prophet, LightGBM and Temporal Fusion Transformer forecasts, hierarchical reconciliation, an OR-Tools order optimizer, and a Dash app. |
 
-Each folder has its own README with architecture, setup, run steps, tests and screenshots.
+Each folder has its own README with architecture, setup and run steps, tests, and results.
