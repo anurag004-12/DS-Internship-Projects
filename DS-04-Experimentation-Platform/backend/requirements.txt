@@ -1,0 +1,13 @@
+dowhy==0.14
+econml==0.17.0
+fastapi==0.162.0
+httpx==0.28.1
+numpy==2.4.6
+pandas==3.1.0
+pymc==5.28.5
+pytest==9.1.1
+python-multipart==0.0.32
+scikit-learn==1.9.1
+scipy==1.15.3
+statsmodels==0.15.0
+uvicorn==0.54.0

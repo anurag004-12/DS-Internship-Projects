@@ -1,0 +1,35 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
+
+# ---- Node / React ----
+node_modules/
+frontend/dist/
+frontend/build/
+
+# ---- Secrets and local settings ----
+.env
+.env.*
+
+# ---- Data: never commit datasets or generated files ----
+data/
+backend/data/
+backend/sample_data/
+*.csv
+*.parquet
+cookie_cats*
+mlruns/
+
+# ---- Logs ----
+*.log
+
+# ---- Editor / OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
